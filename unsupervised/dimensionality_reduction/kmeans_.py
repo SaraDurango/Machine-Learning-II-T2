@@ -2,13 +2,13 @@ import numpy as np
 
 class K_Means:
 
-    def __init__(self,X=None,K=None,max_iters=1000):
+    def __init__(self ,X=None,K=None,max_iters=1000, centroids= None):
         self.X=X
         self.K=K
+        self.centroids=centroids
         self.max_iters=max_iters
         np.random.seed(123)
-        self.centroids
-                   
+        
     def fit(self,X,K,max_iters):
         self.X=X
         self.K=K
