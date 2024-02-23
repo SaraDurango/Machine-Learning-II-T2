@@ -2,17 +2,16 @@ import numpy as np
 
 class K_Means:
 
-    def __init__(self ,X=None,K=None,max_iters=1000, centroids= None):
-        self.X=X
-        self.K=K
-        self.centroids=centroids
-        self.max_iters=max_iters
+    def __init__(self, centroids=None):
+        self.X = None
+        self.K = None
+        self.centroids = centroids
+        self.max_iters = 1000
         np.random.seed(123)
         
-    def fit(self,X,K,max_iters):
-        self.X=X
-        self.K=K
-        self.max_iters=max_iters
+    def fit(self, X):
+        self.X = X
+        self.K = self.centroids.shape[0]
 
         #Centroids      
         self.centroids = self.X[np.random.choice(len(self.X), self.K, replace=False)]
@@ -27,7 +26,7 @@ class K_Means:
             for j in range(self.K):
                 self.centroids[j] = np.mean(self.X[self.labels == j], axis=0)
 
-    def transform(self,X):
+    def transform(self, X):
         distances = []
         for c in self.centroids:
             distances.append(np.linalg.norm(X - c, axis=1))  # Calculates the distance between each data point and the centroid c
@@ -35,6 +34,6 @@ class K_Means:
         distances = np.array(distances)  # Convert to a matrix of the form (k, n)
         return  np.argmin(distances, axis=0)  # Label each data point with the cluster corresponding to the nearest centroid
         
-    def fit_transform(self,X,K,max_iters):    
-        self.fit(X,K,max_iters)
+    def fit_transform(self, X):
+        self.fit(X)
         return self.transform(X)
